@@ -5,6 +5,7 @@ import 'auth.dart';
 import 'data.dart';
 import 'chat_screen.dart';
 import 'empty_screen.dart';
+import 'fade_transition_page.dart';
 
 final GoRouter goRouter = GoRouter(
   routes: <RouteBase>[
@@ -13,9 +14,9 @@ final GoRouter goRouter = GoRouter(
       final String cid = state.params['cid']!;
       final LocalKey pageKey = ValueKey(cid);
       if (contacts.containsKey(cid)) {
-        return NoTransitionPage<void>(key:pageKey, child: ChatScreen(contactId: cid));
+        return FadeTransitionPage(key:pageKey, child: ChatScreen(contactId: cid));
       }
-      return NoTransitionPage<void>(key: pageKey, child: const EmptyScreen());
+      return FadeTransitionPage(key: pageKey, child: const EmptyScreen());
     }),
   ]
 );
