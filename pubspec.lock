@@ -75,9 +75,9 @@ packages:
   go_router:
     dependency: "direct main"
     description:
-      path: "/Users/chtai/git/packages/packages/go_router/"
-      relative: false
-    source: path
+      name: go_router
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "5.0.5"
   intl:
     dependency: "direct main"
