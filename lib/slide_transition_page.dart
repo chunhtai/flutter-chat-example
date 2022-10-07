@@ -20,7 +20,7 @@ class SlideTransitionPage extends CustomTransitionPage {
   ) {
     return SlideTransition(
       position: Tween<Offset>(
-          begin: const Offset(0, -1),
+          begin: const Offset(0, 1),
           end: Offset.zero,
         ).animate(animation),
       child: child,
