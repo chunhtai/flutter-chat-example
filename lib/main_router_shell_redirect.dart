@@ -1,3 +1,4 @@
+import 'package:chat/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,7 +10,21 @@ import 'empty_screen.dart';
 import 'slide_transition_page.dart';
 
 final GoRouter goRouter = GoRouter(
+    redirect: (BuildContext context, GoRouterState state) {
+      bool loggedIn = StreamAuthScope.of(context).currentUser != null;
+      if (state.location == '/login') {
+        if (loggedIn) {
+          return '/';
+        }
+        return null;
+      }
+      if (!loggedIn) {
+        return '/login';
+      }
+      return null;
+    },
     routes: <RouteBase>[
+      GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
       ShellRoute(
         builder: (_, GoRouterState state, Widget child) {
           final String contactId = state.location.substring(1);
@@ -44,7 +59,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamAuthScope(
-        debugInitialUser: const User(id: "0", firstName: 'Chun-Heng', lastName: 'Tai', email: 'chtai@google.com'),
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Chat',

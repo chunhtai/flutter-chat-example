@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamAuthScope(
+        debugInitialUser: const User(id: "0", firstName: 'Chun-Heng', lastName: 'Tai', email: 'chtai@google.com'),
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Chat',

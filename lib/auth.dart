@@ -9,10 +9,11 @@ class StreamAuthScope extends InheritedNotifier<StreamAuthNotifier> {
   /// Creates a [StreamAuthScope] sign in scope.
   StreamAuthScope({
     Key? key,
+    User? debugInitialUser,
     required Widget child,
   }) : super(
     key: key,
-    notifier: StreamAuthNotifier(),
+    notifier: StreamAuthNotifier(debugInitialUser: debugInitialUser),
     child: child,
   );
 
@@ -28,7 +29,7 @@ class StreamAuthScope extends InheritedNotifier<StreamAuthNotifier> {
 /// A class that converts [StreamAuth] into a [ChangeNotifier].
 class StreamAuthNotifier extends ChangeNotifier {
   /// Creates a [StreamAuthNotifier].
-  StreamAuthNotifier() : streamAuth = StreamAuth() {
+  StreamAuthNotifier({User? debugInitialUser}) : streamAuth = StreamAuth(debugInitialUser: debugInitialUser) {
     streamAuth.onCurrentUserChanged.listen((User? string) {
       notifyListeners();
     });
@@ -45,8 +46,9 @@ class StreamAuthNotifier extends ChangeNotifier {
 class StreamAuth {
   /// Creates an [StreamAuth] that clear the current user session in
   /// [refeshInterval] second.
-  StreamAuth({this.refreshInterval = 20})
-      : _userStreamController = StreamController<User?>.broadcast() {
+  StreamAuth({this.refreshInterval = 20, User? debugInitialUser})
+      : _currentUser = debugInitialUser,
+        _userStreamController = StreamController<User?>.broadcast() {
     _userStreamController.stream.listen((User? currentUser) {
       _currentUser = currentUser;
     });
